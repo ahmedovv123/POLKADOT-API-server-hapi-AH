@@ -19,6 +19,8 @@
   "homepage": "https://github.com/ahmedovv123/POLKADOT-API-server-hapi-AH#readme",
   "dependencies": {
     "@hapi/hapi": "^20.2.1",
-    "dotenv": "^10.0.0"
+    "@polkadot/api": "^6.4.1",
+    "dotenv": "^10.0.0",
+    "hapi-postgres-connection": "^7.0.0"
   }
 }
