@@ -4,6 +4,7 @@ const Hapi = require('@hapi/hapi');
 const HapiPostgresConnection = require('hapi-postgres-connection');
 const blockController = require('./src/controllers/blockController');
 const transactionController = require('./src/controllers/transactionController');
+const accountController = require('./src/controllers/accountController');
 
 
 
@@ -72,6 +73,30 @@ const init = async () => {
         method: 'GET',
         path: '/api/transactions/{x}/{n}',
         handler: transactionController.getXTransactionsAfterNth
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/accounts/count',
+        handler: accountController.getAccountsCount
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/accounts/transactions/count/{accountId}',
+        handler: accountController.getAccountTransactionsCount
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/accounts/transactions/{accountId}',
+        handler: accountController.getAccountTransactions
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/accounts/balance/{accountId}',
+        handler: accountController.getAccountBalance
     });
 
     await server.start();
