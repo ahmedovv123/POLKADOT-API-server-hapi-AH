@@ -56,6 +56,24 @@ const init = async () => {
         handler: transactionController.getTransactionsCount
     });
 
+    server.route({
+        method: 'GET',
+        path: '/api/transactions/block/{blockHash}',
+        handler: transactionController.getTransactionsFromBlock
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/transactions/hash/{transactionHash}',
+        handler: transactionController.getTransactionByHash
+    });
+
+    server.route({
+        method: 'GET',
+        path: '/api/transactions/{x}/{n}',
+        handler: transactionController.getXTransactionsAfterNth
+    });
+
     await server.start();
     console.log('Server running on %s', server.info.uri);
 }
