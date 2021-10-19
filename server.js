@@ -11,7 +11,7 @@ const accountController = require('./src/controllers/accountController');
 const init = async () => {
     const server = Hapi.server({
         port: process.env.PORT || 3000,
-        host: 'localhost'
+        host: process.env.HOST || 'localhost'
     });
 
 
