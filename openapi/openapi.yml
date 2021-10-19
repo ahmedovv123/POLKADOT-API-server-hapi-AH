@@ -1,0 +1,281 @@
+openapi: '3.0.0'
+info: {
+  title: 'Polkadot server API',
+  version: '1.0.0',
+  description: 'Polkadot Api for interact interacting with node',
+  contact: {
+      name: 'Ahmet',
+      email: 'ahmedovv123@gmail.com'
+  }
+}
+paths:
+  /api/blocks/:
+    get:
+      summary: get last block
+      tags:
+        - Blocks
+      description: get last block 
+      responses:
+        200:
+          description: Last block
+          content:
+            application/json:
+              schema:
+                type: object
+                required: 
+                  - block
+                properties:
+                  block:
+                    type: object
+        500:
+          description: failure fetching last block
+  /api/blocks/{x}/{nth}:
+    get:
+      summary: GeX blocks after N-th block from new to old
+      tags:
+        - Blocks
+      description: Get X blocks after N-th block from new to old
+      parameters:
+        - in: path
+          name: x
+          schema:
+            type: integer
+          required: true 
+          example: 5
+        - in: path 
+          name: nth
+          schema:    
+            type: integer
+          required: true
+          description: number of block
+          example: 1512532
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+        500:
+          description: failure fetching the block
+  /api/blocks/num/{num}:
+    get:
+      summary: get block by number
+      tags:
+        - Blocks
+      description: get single block providing number
+      parameters:
+        - in: path
+          name: num
+          schema:
+            type: integer
+          required: true
+          description: number of block
+          example: 1512531
+      responses:
+        200:
+          description: Block with number
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: failure fetching the block
+  /api/blocks/hash/{blockHash}:
+    get:
+      summary: Get block by hash
+      tags:
+        - Blocks
+      description: Get block by hash
+      parameters:
+        - in: path
+          name: blockHash
+          schema: 
+            type: string
+          required: true
+          description: hash of block
+          example: '0x4f61e8e6017cce5a10e2de7340061a037895411c19e7bc27f607953d8a56a943'
+      responses:
+        200:
+          description: Block by hash
+          content:
+            application/json:
+              schema:
+                type: object
+                # TODO: Add required properties, because server returns empty object
+        500:
+          description: failure fetching block
+  /api/accounts/count/:
+    get:
+      summary: get account count
+      tags:
+        - Accounts
+      description: get account count from db
+      responses:
+        200:
+          description: Accounts count
+          content:
+            application/json:
+              schema:
+                type: array
+        500:
+          description: failure fetching accounts count
+  /api/accounts/transactions/count/{adr}:
+    get:
+      summary: get address transactions count
+      tags:
+        - Accounts
+      description: get address transactions count from db
+      parameters:
+        - in: path
+          name: adr
+          schema:
+            type: string
+          required: true 
+          description: id of account
+          example: '1743nDTMZisPgBCYSAgkUn1kVG7MePc9rvMEjoRNf4ipVkF'
+      responses:
+        200:
+          description: Transactions count
+          content:
+            application/json:
+              schema:
+                type: array
+        500:
+          description: Failure fetching transactions count
+  /api/accounts/transactions/{adr}:
+    get:
+      summary: get address transactions
+      tags:
+        - Accounts
+      description: get address transactions from db
+      parameters:
+        - in: path
+          name: adr
+          schema:
+            type: string
+          required: true 
+          description: id of account
+          example: '1743nDTMZisPgBCYSAgkUn1kVG7MePc9rvMEjoRNf4ipVkF'
+      responses:
+        200:
+          description: Transactions
+          content:
+            application/json:
+              schema:
+                type: array
+        500:
+          description: Failure fetching transactions
+  /api/accounts/balance/{adr}:
+    get:
+      summary: get address balance
+      tags:
+        - Accounts
+      description: get balance of an address from node
+      parameters:
+        - in: path
+          name: adr
+          schema:
+            type: string
+          required: true
+          description: id of account
+          example: '1743nDTMZisPgBCYSAgkUn1kVG7MePc9rvMEjoRNf4ipVkF'
+      responses:
+        200:
+          description: Balance of address
+          content:
+            application/json:
+              schema:
+                type: object
+        500:
+          description: failure fetching balance of address
+  /api/transactions/count/:
+    get:
+      summary: get all transactions count
+      tags:
+        - Transactions
+      description: get all transactions count
+      responses:
+        200:
+          description: Transactions count
+          content:
+              application/json:
+                schema:
+                  type: array
+        500:
+          description: failure fetching Transactions count
+  /api/transactions/block/{blockHash}:
+    get:
+      summary: Get block transactions
+      tags:
+        - Transactions
+      description: Get block transactions
+      parameters:
+        - in: path
+          name: blockHash
+          schema: 
+            type: string
+          required: true
+          description: hash of block
+          example: '0x527dbeb44ff53d4a805d72e1350ad76fd6e86116a1ba34c6d058f752bcc5db36'
+      responses:
+        200:
+          description: Block transactions
+          content:
+              application/json:
+                schema:
+                  type: array
+        500:
+          description: failure fetching block transactions
+  /api/transactions/hash/{transactionHash}:
+    get:
+      summary: Get transaction by hash
+      tags:
+        - Transactions
+      description: Get transaction by hash
+      parameters:
+        - in: path
+          name: transactionHash
+          schema: 
+            type: string
+          required: true
+          description: hash of block
+          example: '0x2261184f6bd42eb775f2a55477ce65e7d710a535a8c9da98441908bc2ba87170'
+      responses:
+        200:
+          description: Transaction
+          content:
+              application/json:
+                schema:
+                  type: array
+        500:
+          description: failure fetching transaction
+  /api/transactions/{x}/{n}:
+    get:
+      summary: Get X transactions after Nth from new to old
+      tags:
+        - Transactions
+      description: Get X transactions after Nth from new to old
+      parameters:
+        - in: path
+          name: x
+          schema:
+            type: integer
+          required: true 
+          example: 5
+        - in: path 
+          name: n
+          schema:    
+            type: integer
+          required: true
+          description: transaction index from db
+          example: 10
+      responses:
+        200:
+          description: x transactions
+          content:
+              application/json:
+                schema:
+                  type: array
+        500:
+          description: failure fetching transactions
