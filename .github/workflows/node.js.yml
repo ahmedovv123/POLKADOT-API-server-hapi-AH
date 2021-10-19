@@ -26,11 +26,7 @@ jobs:
     - run: npm run build --if-present
     - name: Run tests
       env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
       run: npm test
     
